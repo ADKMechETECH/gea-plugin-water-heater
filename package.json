@@ -1,0 +1,24 @@
+{
+    "name": "gea-plugin-water-heater",
+    "description": "Water heater plugin for General Electric Appliance SDK",
+    "homepage": "http://www.ge.com/",
+    "keywords": [
+        "GE",
+        "GEA",
+        "SDK",
+        "General Electric",
+        "water heater"
+    ],
+    "author": {
+        "name": "Christopher M. Baker",
+        "email": "christopher.baker2@ge.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/GEMakers/gea-plugin-water-heater.git"
+    },
+    "version": "0.1.0",
+    "dependencies": {
+        "gea-sdk": "git+https://github.com/GEMakers/gea-sdk.git"
+    }
+}
