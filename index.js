@@ -134,7 +134,7 @@ function WaterHeaterUnit(bus, appliance, base) {
         format: "UInt16"
     });
 
-    appliance.maximumAllowStandardElectricHours = appliance.erd({
+    appliance.maximumAllowedStandardElectricHours = appliance.erd({
         erd: base++,
         endian: "big",
         format: "UInt16"
