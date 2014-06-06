@@ -18,71 +18,233 @@
  */
 
 const WATER_HEATER_BASE = 0x4000;
+const WATER_HEATER_MODE_BASE = 0x4020;
+const WATER_HEATER_UNIT_BASE = 0x4040;
+const WATER_HEATER_SENSOR_BASE = 0x4060;
 
-function WaterHeater (appliance, base) {
-    appliance.desiredMode = appliance.erd({
+function WaterHeaterMode(bus, appliance, base) {
+    appliance.userSelectedMode = appliance.erd({
         erd: base++,
         format: "UInt8"
     });
 
-    appliance.vacationDaysRemaining = appliance.erd({
+    appliance.operatingMode = appliance.erd({
         erd: base++,
         format: "UInt8"
     });
 
-    appliance.actualTemperature = appliance.erd({
+    appliance.drmFallbackMode = appliance.erd({
         erd: base++,
         format: "UInt8"
     });
 
-    appliance.desiredTemperature = appliance.erd({
+    appliance.vacationFallbackMode = appliance.erd({
         erd: base++,
         format: "UInt8"
     });
 
-    appliance.fallbackMode = appliance.erd({
+    appliance.userSetpoint = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+
+    appliance.vacationSetpoint = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+
+    appliance.actualSetpoint = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+
+    appliance.vacationFallbackSetpoint = appliance.erd({
         erd: base++,
         format: "UInt8"
     });
 
-    appliance.fallbackTemperature = appliance.erd({
+    appliance.timedModeHoursRemaining = appliance.erd({
         erd: base++,
-        format: "UInt8"
+        endian: "big",
+        format: "UInt16"
     });
+}
 
-    appliance.actualMode = appliance.erd({
-        erd: base++,
-        format: "UInt8"
-    });
-
-    appliance.filterStatus = appliance.erd({
-        erd: base++,
-        format: [
-            "filterUsedPercentage:UInt8"
-        ]
-    });
-
-    appliance.remoteOverride = appliance.erd({
-        erd: base++,
-        format: "UInt8"
-    });
-
+function WaterHeaterUnit(bus, appliance, base) {
     appliance.availableModes = appliance.erd({
         erd: base++,
         format: "UInt8"
     });
 
-    appliance.errorCodes = appliance.erd({
+    appliance.tankSize = appliance.erd({
+        erd: base++,
+        format: "UInt8"
+    });
+
+    appliance.modelDesignator = appliance.erd({
+        erd: base++,
+        format: "Ascii"
+    });
+
+    appliance.compressorRuntime = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+
+    appliance.dirtyFilterPercentage = appliance.erd({
+        erd: base++,
+        format: "UInt8"
+    });
+
+    appliance.faultCounters = appliance.erd({
         erd: base++,
         format: "Bytes"
     });
+
+    appliance.activeFaultCodes = appliance.erd({
+        erd: base++,
+        format: "Bytes"
+    });
+
+    appliance.allowedNormalSetpoints = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: [
+            "minimumAllowedNormalSetpoint:UInt16",
+            "maximumAllowedNormalSetpoint:UInt16"
+        ]
+    });
+
+    appliance.allowedVacationSetpoints = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: [
+            "minimumAllowedVacationSetpoint:UInt16",
+            "maximumAllowedVacationSetpoint:UInt16"
+        ]
+    });
+
+    appliance.maximumAllowedVacationHours = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+
+    appliance.maximumAllowStandardElectricHours = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+
+    appliance.modelFeatures = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+}
+
+function WaterHeaterSensors(bus, appliance, base) {
+    appliance.tankTemperature = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+
+    appliance.evaporatorInletTemperature = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+
+    appliance.evaporatorOutletTemperature = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+
+    appliance.compressorOutputTemperature = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+
+    appliance.ambientTemperature = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+
+    appliance.dlbCurrent = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+
+    appliance.lineVoltage = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+
+    appliance.stepperMotorPosition = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+
+    appliance.relayStates = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+
+    appliance.flowEvents = appliance.erd({
+        erd: base++,
+        format: "UInt8"
+    });
+
+    appliance.resolvedElement = appliance.erd({
+        erd: base++,
+        format: "UInt8"
+    });
+
+    appliance.compressorMinimumOnOffTimeState = appliance.erd({
+        erd: base++,
+        format: "UInt8"
+    });
+
+    appliance.sealedSystemRunState = appliance.erd({
+        erd: base++,
+        format: "UInt8"
+    });
+
+    appliance.currentKeysPressed = appliance.erd({
+        erd: base++,
+        format: "UInt8"
+    });
+
+    appliance.mixingValveTemperature = appliance.erd({
+        erd: base++,
+        endian: "big",
+        format: "UInt16"
+    });
+}
+
+function WaterHeater (bus, appliance, base) {
+    WaterHeaterMode(bus, appliance, WATER_HEATER_MODE_BASE);
+    WaterHeaterUnit(bus, appliance, WATER_HEATER_UNIT_BASE);
+    WaterHeaterSensors(bus, appliance, WATER_HEATER_SENSOR_BASE);
 
     return appliance;
 }
 
 exports.plugin = function (bus, configuration, callback) {
     bus.on("appliance", function (appliance) {
-        appliance.read(WATER_HEATER_BASE, function (value) {
+        appliance.read(WATER_HEATER_MODE_BASE, function (value) {
             bus.emit("water-heater", WaterHeater(bus, appliance, WATER_HEATER_BASE));
         });
     });
