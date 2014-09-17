@@ -3,6 +3,28 @@
 
 This node.js package provides functionality for communicating with a water heater via the [General Electric Appliance Software Development Kit](https://github.com/GEMakers/gea-sdk). In order to use this software, you must first connect your water heater to your computer using the [Green Bean](https://github.com/GEMakers/green-bean).
 
+&#x26a0; CAUTION: To prevent a risk of personal injury or property damage use this device and the API to modify the functionality of your GE Appliances only as directed in the [Guide to Safe and Reliable Operation](#guide-to-safe-and-reliable-operation).
+
+## Guide to Safe and Reliable Operation
+The interface between the green bean and the hybrid electric water heater can take place while the appliance is in either a consumer or a native mode.
+
+
+**Consumer mode** allows developers to access the high-level algorithms of an appliance, such as changing the operational mode or set temperature of the unit.
+In consumer mode a user connected is unable change the low level functions that govern how the heating cycle runs.
+
+
+**Native mode** allows a developer to create the low-level algorithms of an appliance, such as direct control of motors, fans, actuators, heaters, and other controlled devices.
+While in native mode, high-level algorithms, such as a hybrid electric mode, are not operational.
+Native mode allows a developer to, for example, create a new water heating profile to meet unique needs.
+While operating in native mode, the developer must adhere to the following rules:
+
+1. The user set point of the water heater is normally limited to 140 degrees Fahrenheit. During native mode the user should not attempt to heat the water higher than 165 degrees Fahrenheit as there is a mechanical Thermal Cut Out (TCO) that operates at approximately that temperature. TCO requires a manual reset if limits are exceeded.
+1. Whenever a heating element is to be operated (elements are: Compressor, Upper Electric Element, and Lower Electric Element) the Double Line Break (DLB) relay should be closed/turned on. In order to maintain reliability of the DLB relay it is always closed while no heating elements are on, and opened only after all heating elements are off. Control of the DLB is enforced during native mode when attempting to turn on heating elements, however, it may be overridden if you command the DLB directly.
+1. Due to daisy chain wiring, one and only one heating element will be energized at any one time. When the first element is energized it deprives energy from the remaining elements. The priority within the daisy chain is Upper Electric Element, Lower Electric Element, and the Compressor.
+1. Excessive relay cycling can shorten the life of the relays.
+1. To maintain native mode operation, the native mode command must be sent at least once every 5 minutes (2.5 minute periodic rate is recommended).
+
+
 ## Overview
 
 1. [Using the Software](#using-the-software)
